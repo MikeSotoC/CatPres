@@ -56,9 +56,16 @@
             public void Run()
             {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
+                if (doc == null)
+                {
+                    Application.ShowAlertDialog("Error: No hay un documento activo.");
+                    return;
+                }
+                
                 Database db = doc.Database;
                 Editor ed = doc.Editor;
 
+                using (DocumentLock lockDoc = doc.LockDocument())
                 using (Transaction tr = db.TransactionManager.StartTransaction())
                 {
                     // ── 1. Selección ──────────────────────────────────────────────
