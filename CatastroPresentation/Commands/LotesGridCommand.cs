@@ -430,18 +430,15 @@
                         var filasLote = new List<FilaLote>();
                         foreach (int idx in ordenados)
                         {
-                            using (var plLote = tr.GetObject(lotes[idx].EntId, OpenMode.ForRead)
-                                         as Polyline)
+                            var plLote = tr.GetObject(lotes[idx].EntId, OpenMode.ForRead) as Polyline;
+                            filasLote.Add(new FilaLote
                             {
-                                filasLote.Add(new FilaLote
-                                {
-                                    NumLote = lotes[idx].NumLote,
-                                    Area = lotes[idx].Area,
-                                    Frente = plLote != null
-                                              ? ManzanaDrawHelper.CalcFrente(plLote)
-                                              : 0.0
-                                });
-                            }
+                                NumLote = lotes[idx].NumLote,
+                                Area = lotes[idx].Area,
+                                Frente = plLote != null
+                                          ? ManzanaDrawHelper.CalcFrente(plLote)
+                                          : 0.0
+                            });
                         }
 
                         // Cuadros de datos de manzana
